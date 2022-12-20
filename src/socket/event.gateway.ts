@@ -11,6 +11,8 @@ import { Socket } from 'net';
 import { from, map, Observable } from 'rxjs';
 import { Server } from 'socket.io';
 import { log } from '../logger/logger';
+import { isObject } from '@nestjs/common/utils/shared.utils';
+import { SocketDataDto } from './dto/socket-data.dto';
 
 @WebSocketGateway({
   cors: {
@@ -33,13 +35,29 @@ export class EventGateway implements OnGatewayInit {
 
   @SubscribeMessage('event-with-socket')
   handleEventWithSocket(
-    @MessageBody() data: string,
+    @MessageBody() data: SocketDataDto,
     @ConnectedSocket() client: Socket,
-  ): string {
-    return data;
+  ): WsResponse<string> {
+    log.info(data.inverter);
+    log.info(isObject(data));
+    if (isObject(data)) {
+      log.info(data.inverter);
+      const inverter = data.inverter;
+      log.info(
+        'inverter ID: ',
+        inverter.id,
+        'inverter DeviceKey: ',
+        inverter.deviceKey,
+      );
+    }
+    log.info('headers: ', client['handshake'].headers);
+    return {
+      event: 'event-with-socket',
+      data: JSON.stringify(data),
+    };
   }
 
-  @SubscribeMessage('events')
+  @SubscribeMessage('count-events')
   onEvent(@MessageBody() data: unknown): Observable<WsResponse<Number>> {
     log.info('Request events');
     const event = 'events';
