@@ -87,10 +87,11 @@ __decorate([
     __metadata("design:returntype", rxjs_1.Observable)
 ], EventGateway.prototype, "onEvent", null);
 EventGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)({
+    (0, websockets_1.WebSocketGateway)(81, {
         cors: {
             origin: '*',
         },
+        transport: ['websocket'],
     })
 ], EventGateway);
 exports.EventGateway = EventGateway;

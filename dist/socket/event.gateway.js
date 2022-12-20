@@ -28,10 +28,7 @@ let EventGateway = class EventGateway {
         return id;
     }
     handleEventWithSocket(data, client) {
-        logger_1.log.info(data.inverter);
-        logger_1.log.info((0, shared_utils_1.isObject)(data));
         if ((0, shared_utils_1.isObject)(data)) {
-            logger_1.log.info(data.inverter);
             const inverter = data.inverter;
             logger_1.log.info('inverter ID: ', inverter.id, 'inverter DeviceKey: ', inverter.deviceKey);
         }
@@ -90,10 +87,11 @@ __decorate([
     __metadata("design:returntype", rxjs_1.Observable)
 ], EventGateway.prototype, "onEvent", null);
 EventGateway = __decorate([
-    (0, websockets_1.WebSocketGateway)({
+    (0, websockets_1.WebSocketGateway)(81, {
         cors: {
             origin: '*',
         },
+        transport: ['websocket'],
     })
 ], EventGateway);
 exports.EventGateway = EventGateway;

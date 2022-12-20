@@ -7,11 +7,11 @@
             integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
             crossorigin="anonymous"></script>
     <script>
-        const socket = io('http://localhost:3000');
-        socket.on('connect', function () {
+        const socketServer = io('http://localhost:81');
+        socketServer.on('connect', function () {
             console.log('Connected');
             //
-            socket.emit('count-events', {test: 'test'});
+            socketServer.emit('count-events', {test: 'test'});
             // socket.emit('event-id', 0, response =>
             //     console.log('event-id:', response),
             // );
@@ -19,7 +19,7 @@
             //     id: 1,
             //     deviceKey: 'C12312A-A1'
             // })
-            socket.emit('event-with-socket', {
+            socketServer.emit('event-with-socket', {
                 inverter: {
                     id: 123,
                     deviceKey: "C123412A-A1"
@@ -27,16 +27,16 @@
             })
         });
 
-        socket.on('event-with-socket', (data) => {
+        socketServer.on('event-with-socket', (data) => {
             console.log(JSON.parse(data));
         })
-        socket.on('events', function (data) {
+        socketServer.on('events', function (data) {
             console.log('event', data);
         });
-        socket.on('exception', function (data) {
+        socketServer.on('exception', function (data) {
             console.log('exception', data);
         });
-        socket.on('disconnect', function () {
+        socketServer.on('disconnect', function () {
             console.log('Disconnected');
         });
     </script>

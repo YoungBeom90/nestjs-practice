@@ -14,10 +14,11 @@ import { log } from '../logger/logger';
 import { isObject } from '@nestjs/common/utils/shared.utils';
 import { SocketDataDto } from './dto/socket-data.dto';
 
-@WebSocketGateway({
+@WebSocketGateway(81, {
   cors: {
     origin: '*',
   },
+  transport: ['websocket'],
 })
 export class EventGateway implements OnGatewayInit {
   @WebSocketServer()
