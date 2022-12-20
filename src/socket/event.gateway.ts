@@ -38,10 +38,7 @@ export class EventGateway implements OnGatewayInit {
     @MessageBody() data: SocketDataDto,
     @ConnectedSocket() client: Socket,
   ): WsResponse<string> {
-    log.info(data.inverter);
-    log.info(isObject(data));
     if (isObject(data)) {
-      log.info(data.inverter);
       const inverter = data.inverter;
       log.info(
         'inverter ID: ',
